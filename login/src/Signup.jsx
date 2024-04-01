@@ -28,72 +28,89 @@ function Signup() {
       .catch((err) => console.error(err)); // Use catch for error handling
   };
   return (
-    <div className="container mt-5">
-      <div className="row justify-content-center">
-        <div className="col-md-6">
-          <div className="card ">
-            <div className="card-body">
-              <h5 className="card-title text-center">Signup</h5>
-              <form onSubmit={handleSubmit}>
-                <div className="form-group">
-                  <label htmlFor="username">Username</label>
-                  <input
-                    type="text"
-                    onChange={(e) =>
-                      setValues({ ...values, username: e.target.value })
-                    }
-                    className="form-control text-center"
-                    id="username"
-                    placeholder="Enter username"
-                    required
-                  />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="name">Name</label>
-                  <input
-                    type="text"
-                    onChange={(e) =>
-                      setValues({ ...values, name: e.target.value })
-                    }
-                    className="form-control text-center"
-                    id="name"
-                    placeholder="Enter name"
-                    required
-                  />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="email">Email address</label>
-                  <input
-                    type="email"
-                    onChange={(e) =>
-                      setValues({ ...values, email: e.target.value })
-                    }
-                    className="form-control text-center"
-                    id="email"
-                    placeholder="Enter email"
-                    required
-                  />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="password">Password</label>
-                  <input
-                    type="password"
-                    className="form-control text-center"
-                    onChange={(e) =>
-                      setValues({ ...values, password: e.target.value })
-                    }
-                    id="password"
-                    placeholder="Password"
-                    required
-                  />
-                </div>
+    <div>
+      <div className="navbar navbar-dark bg-dark">
+        <div className="container">
+          <a className="navbar-brand" href="#">
+            My Awesome App
+          </a>
+        </div>
+      </div>
+      <div className="full-screen-bg bg-gray d-flex align-items-center justify-content-center">
+        <div className="container">
+          <div className="row justify-content-center">
+            <div className="col-md-6">
+              <div className="card position-relative">
+                <div className="card-body">
+                  <h5 className="card-title text-center">Signup</h5>
+                  <form onSubmit={handleSubmit}>
+                    <div className="form-group">
+                      <label htmlFor="username">Username</label>
+                      <input
+                        type="text"
+                        onChange={(e) =>
+                          setValues({ ...values, username: e.target.value })
+                        }
+                        className="form-control text-center"
+                        id="username"
+                        placeholder="Enter username"
+                        required
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="name">Name</label>
+                      <input
+                        type="text"
+                        onChange={(e) =>
+                          setValues({ ...values, name: e.target.value })
+                        }
+                        className="form-control text-center"
+                        id="name"
+                        placeholder="Enter name"
+                        required
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="email">Email address</label>
+                      <input
+                        type="email"
+                        onChange={(e) =>
+                          setValues({ ...values, email: e.target.value })
+                        }
+                        className="form-control text-center"
+                        id="email"
+                        placeholder="Enter email"
+                        required
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="password">Password</label>
+                      <input
+                        type="password"
+                        className="form-control text-center"
+                        onChange={(e) =>
+                          setValues({ ...values, password: e.target.value })
+                        }
+                        id="password"
+                        placeholder="Password"
+                        required
+                      />
+                    </div>
 
-                <div className="text-center mt-3">
-                  <button type="submit" className="btn btn-primary btn-block ">
-                    Sign Up
-                  </button>
+                    <div className="text-center mt-3">
+                      <button
+                        type="submit"
+                        className="btn btn-primary btn-block "
+                      >
+                        Sign Up
+                      </button>
+                    </div>
+                    <p className="text-center mt-3">
+                      Already have account? <a href="/login">Login here</a>.
+                    </p>
+                  </form>
                 </div>
-              </form>
+              </div>
             </div>
           </div>
         </div>

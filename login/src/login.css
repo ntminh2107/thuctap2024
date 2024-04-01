@@ -1,0 +1,13 @@
+.login-container {
+  background-color: #487eb5; /* Dark grey background color */
+  padding: 20px;
+  border-radius: 5px;
+}
+.bg-gray {
+  background-color: #44688c; /* Adjust the shade of gray as needed */
+}
+
+.full-screen-bg {
+  height: 100vh;
+  width: 100vw;
+}
