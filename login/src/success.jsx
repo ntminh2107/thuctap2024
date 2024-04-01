@@ -1,12 +1,28 @@
 // SuccessPage.jsx
 
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 const SuccessPage = () => {
-  const location = useLocation();
-  const userName = location.state && location.state.username;
+  const [auth, setAuth] = useState(false);
+  const [message, setMessage] = useState("");
+  const [name, setName] = useState("");
+  useEffect(() => {
+    axios
+      .get("http://localhost:8080/api/")
+      .then((res) => {
+        if (res.data.Status == "success") {
+          setAuth(true);
+          setName(res.data.name);
+        } else {
+          setAuth(false);
+          setMessage(res.data.Error);
+        }
+      })
+      .then((err) => console.log(err));
+  });
 
   return (
     <div>
@@ -16,18 +32,28 @@ const SuccessPage = () => {
             My Awesome App
           </Link>
           <div className="navbar-nav ml-auto">
-            <span className="navbar-text mr-3">Hello, {userName}!</span>
+            <span className="navbar-text mr-3">Hello, {name}!</span>
             <a href="" className="nav-link">
               Logout
             </a>
           </div>
         </div>
       </nav>
-      <div className="container mt-5">
-        <h1>Welcome, {userName}!</h1>
-        <p>Login Successful. You are now logged in.</p>
-        {/* Add additional content or actions here */}
-      </div>
+      {auth ? (
+        <div className="container mt-5">
+          <h1>Welcome, {name}!</h1>
+          <p>Login Successful. You are now logged in.</p>
+          {/* Add additional content or actions here */}
+        </div>
+      ) : (
+        <div className="container mt-5">
+          <h1>{message}</h1>
+          <p>
+            Cannot authenticate, pls <a href="/login">login </a>
+            again
+          </p>
+        </div>
+      )}
     </div>
   );
 };

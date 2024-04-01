@@ -1,7 +1,7 @@
 import express, { response } from "express";
 import mysql from "mysql2";
 import cors from "cors";
-import jwt from "jsonwebtoken";
+import jwt, { decode } from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import cookieParser from "cookie-parser";
 
@@ -93,7 +93,6 @@ app.post("/api/signup", (req, res) => {
 //API login
 app.post("/api/login", (req, res) => {
   const sql = "SELECT * FROM minhusers WHERE username = ?";
-  console.log(req.body.username.toString());
   db.query(sql, [req.body.username], (err, data) => {
     if (err) return res.json({ Error: "Login error", err });
 
@@ -118,6 +117,27 @@ app.post("/api/login", (req, res) => {
       return res.json({ Error: "no username existed" });
     }
   });
+});
+
+const verifyUser = (req, res, next) => {
+  const token = req.cookies.token;
+  console.log(token.toString());
+  if (!token) {
+    return res.json({ Error: "you are not autheticated" });
+  } else {
+    jwt.verify(token, "jwt-secret-key", (err, decode) => {
+      if (err) {
+        return res.json({ Error: "token wrong" });
+      } else {
+        req.name = decode.name;
+        next();
+      }
+    });
+  }
+};
+
+app.get("/api", verifyUser, (req, res) => {
+  return res.json({ Status: "success", name: req.name });
 });
 
 app.get("/api/check", (req, res) => {
