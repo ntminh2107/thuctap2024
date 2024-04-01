@@ -19,9 +19,9 @@ app.use(
 app.use(cookieParser());
 
 const db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "12345678",
+  host: "10.144.13.87",
+  user: "ipcc_voice",
+  password: "ipcc_voice@11x@2018@HCM123",
   database: "thuctap",
 });
 
@@ -40,7 +40,7 @@ app.post("/api/signup", (req, res) => {
 
   // Check if username already exists in the database
   db.query(
-    "SELECT * FROM users WHERE username = ?",
+    "SELECT * FROM minhusers WHERE username = ?",
     [username],
     (err, usernameRows) => {
       if (err) {
@@ -54,7 +54,7 @@ app.post("/api/signup", (req, res) => {
 
       // Check if email already exists in the database
       db.query(
-        "SELECT * FROM users WHERE email = ?",
+        "SELECT * FROM minhusers WHERE email = ?",
         [email],
         (err, emailRows) => {
           if (err) {
@@ -73,7 +73,7 @@ app.post("/api/signup", (req, res) => {
             }
 
             const sql =
-              "INSERT INTO users(username, name, email, password) VALUES (?, ?, ?, ?)";
+              "INSERT INTO minhusers(username, name, email, password) VALUES (?, ?, ?, ?)";
             const values = [username, name, email, hash];
             db.query(sql, values, (err, result) => {
               if (err) {
@@ -92,7 +92,7 @@ app.post("/api/signup", (req, res) => {
 
 //API login
 app.post("/api/login", (req, res) => {
-  const sql = "SELECT * FROM users WHERE username = ?";
+  const sql = "SELECT * FROM minhusers WHERE username = ?";
   console.log(req.body.username.toString());
   db.query(sql, [req.body.username], (err, data) => {
     if (err) return res.json({ Error: "Login error", err });
