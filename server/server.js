@@ -25,6 +25,12 @@ const db = mysql.createConnection({
   database: "thuctap",
 });
 
+// const db = mysql.createConnection({
+//   host: "localhost",
+//   user: "root",
+//   password: "12345678",
+//   database: "thuctap",
+// });
 //test dbconnection
 db.connect((err) => {
   if (err) {
@@ -73,7 +79,7 @@ app.post("/api/signup", (req, res) => {
             }
 
             const sql =
-              "INSERT INTO minhusers(username, name, email, password) VALUES (?, ?, ?, ?)";
+              "INSERT INTO minhusers(username, name, email, password, role) VALUES (?, ?, ?, ?, 'user')";
             const values = [username, name, email, hash];
             db.query(sql, values, (err, result) => {
               if (err) {
@@ -121,7 +127,6 @@ app.post("/api/login", (req, res) => {
 
 const verifyUser = (req, res, next) => {
   const token = req.cookies.token;
-  console.log(token.toString());
   if (!token) {
     return res.json({ Error: "you are not autheticated" });
   } else {
@@ -138,6 +143,11 @@ const verifyUser = (req, res, next) => {
 
 app.get("/api", verifyUser, (req, res) => {
   return res.json({ Status: "success", name: req.name });
+});
+
+app.get("/api/logout", (req, res) => {
+  res.clearCookie("token");
+  return res.json({ Status: "success" });
 });
 
 app.get("/api/check", (req, res) => {

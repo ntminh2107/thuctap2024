@@ -9,11 +9,13 @@ const SuccessPage = () => {
   const [auth, setAuth] = useState(false);
   const [message, setMessage] = useState("");
   const [name, setName] = useState("");
+  axios.defaults.withCredentials = true;
+
   useEffect(() => {
     axios
       .get("http://localhost:8080/api/")
       .then((res) => {
-        if (res.data.Status == "success") {
+        if (res.data.Status === "success") {
           setAuth(true);
           setName(res.data.name);
         } else {
@@ -24,6 +26,15 @@ const SuccessPage = () => {
       .then((err) => console.log(err));
   });
 
+  const handleDelete = () => {
+    axios
+      .get("http://localhost:8080/api/logout")
+      .then((res) => {
+        (res) => location.reload(true);
+      })
+      .catch((err) => console.log(err));
+  };
+
   return (
     <div>
       <nav className="navbar navbar-dark bg-dark">
@@ -33,7 +44,7 @@ const SuccessPage = () => {
           </Link>
           <div className="navbar-nav ml-auto">
             <span className="navbar-text mr-3">Hello, {name}!</span>
-            <a href="" className="nav-link">
+            <a href="/login" className="nav-link" onClick={handleDelete}>
               Logout
             </a>
           </div>
